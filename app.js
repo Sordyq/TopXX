@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const connectDB = require("./Connection/ConnectDB");
 const app = express();
-const port = process.env.port
+const port = process.env.port || 9000
 const passport = require("passport")
 const session = require("express-session");
 const router = require("./Router/Handler");
