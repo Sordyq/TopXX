@@ -1,5 +1,5 @@
 const { default: axios } = require("axios");
-const Transaction = require("../model/Transaction");
+const Transaction = require('../Model/Transaction') 
 const Wallet = require("../Model/Wallet");
 
 require("dotenv").config();
