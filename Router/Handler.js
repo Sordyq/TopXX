@@ -1,7 +1,7 @@
 const express = require("express")
 const {signUp, forgetPassword, updatePassword, Logout, Login} = require("../Controller/Auth")
 const fundWallet = require("../Controller/Transaction")
-const {postChallenge,getSingleChallenge,getAllChallenge,updateChallenge,deleteChallenge, acceptChange, adminApproval, claimChallenge }= require("../Controller/betChallenge");
+const {postChallenge,getAllChallenge,updateChallenge,deleteChallenge, acceptChange, adminApproval, claimChallenge }= require("../Controller/betChallenge");
 const Updateprofile = require("../Controller/UpdateProfile");
 const { trendingBets, latestBets } = require("../Controller/LatestBet");
 const { isLoggedin } = require("../Middleware/Auth");

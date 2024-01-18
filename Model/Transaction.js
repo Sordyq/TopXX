@@ -5,39 +5,39 @@ const TransactionSchema = new mongoose.Schema({
     user:{
         type: mongoose.Types.ObjectId,
         ref: "User",
-        require: true
+        required: true
     },
     balanceBefore:{
         type:Number,
-        require:true
+        required:true
     },
     balanceAfter:{
         type:Number,
-        require:true
+        required:true
     },
     amount:{
         type:Number,
-        require:true
+        required:true
     },
     transactionType:{
         type: String,
         enum: ["Credit", "Debit"],
-        require: [true, "Transaction type not indicated"]
+        required: [true, "Transaction type not indicated"]
     },
     status:{
         type: String,
         enum: ["Pending", "Completed", "Failed"],
         default: "Pending",
-        require: true
+        required: true
     },
     description:{
         type: String,
-        require: [true, "Please indicate the description of this transaction"]
+        required: [true, "Please indicate the description of this transaction"]
     },
     reference_number: {
         type: String,
         trim: true,
-        require: [true, "Transaction not referenced"]
+        required: [true, "Transaction not referenced"]
     },
 
 },
