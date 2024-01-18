@@ -21,7 +21,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/api/v1/", router)
+app.use("/", router)
 
 
 
