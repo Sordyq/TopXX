@@ -34,7 +34,7 @@ const fundWallet = async (req, res) => {
     });
 
     let transaction_id = "";
-    const url = "https://api.paystack.co/transaction/verify/{reference}"
+    const url = `https://api.paystack.co/transaction/verify/${reference}`
     try {
 
         const payment = await axios.get(url, {

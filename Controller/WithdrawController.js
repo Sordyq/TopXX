@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 
 const verifyAccount = async (req, res)=>{
     const {accountNumber, accountName, bankcode} = req.body;
-    const secret_key = process.env.secret_key;
+    const secret_key = process.env.PAYSTACK_TOKEN;
     const url = `https://api.paystack.co/bank/resolve?account_number=${accountNumber}&account_name=${accountName}&bank_code=${bankcode}`
     try {
         
@@ -50,7 +50,7 @@ const verifyAccount = async (req, res)=>{
 
     const createRecipient = async(recipientDetails)=>{
 
-    const paystackSecretKey = process.env.SECRET_KEY;
+    const paystackSecretKey = process.env.PAYSTACK_TOKEN;
 
 
     try {
@@ -83,7 +83,7 @@ const verifyAccount = async (req, res)=>{
 
     const WithdrawFunds = async (req, res)=>{
     const {amount, recipientCode} = req.body;
-    const paystackSecretKey = process.env.SECRET_KEY;
+    const paystackSecretKey = process.env.PAYSTACK_TOKEN;
 
     try {
         const response = await axios.post(

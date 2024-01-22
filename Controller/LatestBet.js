@@ -12,7 +12,7 @@ const trendingBets = async(req,res) =>{
 
 const latestBets = async(req,res) =>{
     try{
-        const latestBet = await ChallengeModel.find({status: 'pending'}). sort({_id:-1}).limit(1)
+        const latestBet = await ChallengeModel.find({status: 'pending'});
 
         if(latestBet){
             res.json(latestBet)

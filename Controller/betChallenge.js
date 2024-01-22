@@ -5,7 +5,14 @@ const Wallet = require("../Model/Wallet");
 
 const postChallenge= async(req,res)=>{
     const user = req.user;
-    const {challenge_title, amount_to_stake, expected_challenge_time, preferred_level, livestream_link, description} = req.body
+    const {
+        challenge_title,
+        amount_to_stake,
+        expected_challenge_time,
+        preferred_level,
+        livestream_link,
+        description
+    } = req.body
 
     try {
         if(!challenge_title || !amount_to_stake || !expected_challenge_time || !preferred_level || !livestream_link || !description) return res.satus(403).json("all fields are required") 
@@ -33,28 +40,28 @@ const getAllChallenge = async(req, res)=>{
     return res.json({allChallenge})
 }
 
-// const getSingleChallenge = async(req,res)=>{
-//     try {
-//         const _id = req.params.id
-//         const singleChallenge = await ChallengeModel.findById(_id)
+const getSingleChallenge = async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const singleChallenge = await ChallengeModel.findById({_id:id})
 
-//         if(!singleChallenge){
-//             return res.status(404).json({error:"Challenge not found"})
-//         }
-//         res.json({singleChallenge})
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({error: 'Server error'})
-//     }
-// }
+        if(!singleChallenge){
+            return res.status(404).json({error:"Challenge not found"})
+        }
+        res.json({singleChallenge})
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'Server error'})
+    }
+}
 
 // Accept Challenge
 
 const acceptChange = async(req, res)=>{
     const user = req.user;
-    const _id = req.params.id;
+    const {id} = req.params;
 
-    const foundChallenge = await ChallengeModel.findById(_id);
+    const foundChallenge = await ChallengeModel.findById({_id:id});
     if(foundChallenge.status != "pending") return res.json({info: "You can't accept this challenge as it is already accepted by someome!"})
     foundChallenge.opponent = user._id;
     foundChallenge.status = "accepted";
@@ -63,9 +70,10 @@ const acceptChange = async(req, res)=>{
 
 // Claim Challenge features
 const claimChallenge = async(req, res)=>{
+
     const user = req.user._id;
-    const _id = req.params.id;
-    const availChallenge = await ChallengeModel.findById(_id);
+    const {id} = req.params;
+    const availChallenge = await ChallengeModel.findById({_id:id});
     if(availChallenge.opponent != user || availChallenge.challenger != user) return res.json({info: "You are not allowed to accept a challenge you're not a participants!"});
     const {proof} = req.body;
     availChallenge.proof = proof
@@ -75,9 +83,9 @@ const claimChallenge = async(req, res)=>{
 };
 
 const adminApproval = async(req, res)=>{
-    const _id = req.params.id;
+    const {id} = req.params;
 
-    const claimedBet = await ChallengeModel.findById(_id);
+    const claimedBet = await ChallengeModel.findById({_id: id});
     if(claimedBet.status != "completed") return res.json({info : "You can't approve this challenge at the moment because it's not yet completed!"});
     const claimAmount = claimedBet.amount_to_stake * 2;
     const betWinner = claimedBet.winner;
@@ -97,14 +105,13 @@ const adminApproval = async(req, res)=>{
 const updateChallenge = async(req,res)=>{
     try {
         const _id = req.params.id
-        const {challenge_title, amount_to_stake, expected_challenge_time, preferred_level, livestream_link, description} = req.body
-
+        // const {challenge_title, amount_to_stake, expected_challenge_time, preferred_level, livestream_link, description} = req.body
         const updatedChallenge = await ChallengeModel.findByIdAndUpdate(_id, req.body, 
             {new: true, runValidators:true})
     if(!updatedChallenge) {
         return res.status(404).json({error:"Challenge not found"})
     }
-    res.json({updatedChallenge})
+    res.json({info: "Changed updated successfully!", updatedChallenge})
     } catch (error) {
         console.error(error)
         return res.status(500).json({error: 'Server error'});
@@ -114,8 +121,8 @@ const updateChallenge = async(req,res)=>{
 
 const deleteChallenge = async(req,res)=>{
     try {
-        const _id = req.params.id
-        const deletedChallenge = await ChallengeModel.findByIdAndDelete({_id})
+        const {id} = req.params;
+        const deletedChallenge = await ChallengeModel.findByIdAndDelete({_id: id})
     if(!deletedChallenge) {
         return res.satus(404).json({error:"Challenge not found, or has been deleted!"})
     }
@@ -129,7 +136,7 @@ const deleteChallenge = async(req,res)=>{
 module.exports = {
     postChallenge,
     getAllChallenge,
-    // getSingleChallenge,
+    getSingleChallenge,
     updateChallenge,
     deleteChallenge,
     claimChallenge,

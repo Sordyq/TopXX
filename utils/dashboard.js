@@ -4,14 +4,15 @@ const Wallet = require('../Model/Wallet')
 
 const userDashboard = async(req,res)=>{
     const user = req.user;
-    const wallet = await Wallet.find()
-    // const latest = await latestBets.find()
-    // const trending = await trendingBets()
+    const wallet = await Wallet.findOne({user});
+    const latest = await latestBets.find()
+    const trending = await trendingBets.find()
 
     const userData = {
-        wallet
-        // latest,
-        // trending
+        user,
+        wallet,
+        latest,
+        trending
     }
     if(!user) throw new Error('User not found')
     return res.json({data: userData})

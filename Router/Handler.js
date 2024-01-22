@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 
 router.route('/').post(postChallenge)
 // router.route('/:id').get(getSingleChallenge)
-router.route('/').get(getAllChallenge)
+router.route('/get-all-challenge').get(getAllChallenge)
 router.route('/:id').put(updateChallenge)
 router.route('/:id').delete(deleteChallenge)
 router.route("/signup").post(signUp)

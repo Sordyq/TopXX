@@ -10,7 +10,7 @@ const generateRandom = () => {
     return Math.random().toString() + "hgjk";
 }
 const signUp = async (req,res)=>{
-    const {username, email, password} = req.body;
+    const {username, email, password, confirmPassword} = req.body;
   
   
     if(!username){
@@ -22,6 +22,8 @@ const signUp = async (req,res)=>{
     if(!password){
       return res.json({error:"password is required"})
     }
+
+    if(password !== confirmPassword) return res.json({error: "Password and confirm password doesn't match!"})
     const existingUser = await User.findOne({email})
     if(existingUser){
       return res.json({error:"user already exist"})
