@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 
 
 
-router.route('/').post(postChallenge)
+router.route('/post-challenge').post(postChallenge)
 // router.route('/:id').get(getSingleChallenge)
 router.route('/get-all-challenge').get(getAllChallenge)
 router.route('/:id').put(updateChallenge)
