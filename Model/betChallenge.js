@@ -31,19 +31,19 @@ const challengeSchema = new Schema({
         default: "pending"
     },
     challenger:{
-        type: mongoose.Types.ObjectId,
+        type: String,
         ref:"User",
         required:true
     },
     opponent:{
-        type: mongoose.Types.ObjectId,
+        type: String,
         ref:"User"
     },
     proof:{
         type:String
     },
     winner:{
-        type: mongoose.Types.ObjectId,
+        type: String,
         ref:"User"
     }
 }, {timestamps: true})

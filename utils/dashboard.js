@@ -7,7 +7,9 @@ const userDashboard = async(req,res)=>{
     const user = req.user;
     const wallet = await Wallet.findOne({user});
     const latestBet = await ChallengeModel.find({status: 'pending'});
-    const trendingBet = await ChallengeModel.find({status: 'accepted'});
+    const claimedBet = await ChallengeModel.find({status: 'claimed'});
+    const completedBet = await ChallengeModel.find({status: 'completed'});
+    const trendingBet = await ChallengeModel.find({status: 'accepted'})
 
     const formatWallet = (wallet)=>{
         return {
@@ -25,26 +27,13 @@ const userDashboard = async(req,res)=>{
         }
     }
 
-    const formatTrendingBet = (bet)=>{
-        return{
-            _id: bet._id,
-            challenge_title: bet.challenge_title,
-            amount_to_stake: bet.amount_to_stake,
-            expected_challenge_time: bet.expected_challenge_time,
-            livestream_link: bet.livestream_link,
-            preferred_level: bet.preferred_level,
-            description: bet.description,
-            status: bet.status,
-            challenger: bet.challenger,
-            opponent: bet.opponent
-        }
-    }
-
     const userData = {
         user: formatUser(user),
         wallet: formatWallet(wallet),
         latestBet,
-        trendingBet
+        trendingBet,
+        claimedBet,
+        completedBet
     }
     if(!user) throw new Error('User not found')
     return res.json(userData)
