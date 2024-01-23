@@ -30,6 +30,6 @@ router.route("/challenger-claim/:id").post(claimChallenge)
 router.route("/opponent-claim/:id").post(oppoentClaimChallenge)
 router.route('/trend').post(trendingBets)
 router.route('/latest').post(latestBets)
-router.route('/user-dashboard').get([isLoggedin], userDashboard)
+router.route('/user-dashboard').get(userDashboard)
 
 module.exports = router
