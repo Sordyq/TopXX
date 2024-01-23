@@ -12,13 +12,7 @@ const trendingBets = async(req,res) =>{
 
 const latestBets = async(req,res) =>{
     try{
-        const latestBet = await ChallengeModel.find({status: 'pending'});
-
-        if(latestBet){
-            res.json(latestBet)
-        } else{
-            res.status(404).json({error: 'No accepted bets found'})
-        }
+        
     } catch (error){
         res.status(500).json({error: 'Server Error'})
     }

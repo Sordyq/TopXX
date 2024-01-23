@@ -27,7 +27,7 @@ const postChallenge= async(req,res)=>{
         challenger:user._id
     })
 
-    await newChallenge.save()
+    return res.json({message: "Successfully posted new challenge", success:true})
     } catch (error) {
         console.log(error.message)
     }
@@ -62,10 +62,11 @@ const acceptChange = async(req, res)=>{
     const {id} = req.params;
 
     const foundChallenge = await ChallengeModel.findById({_id:id});
-    if(foundChallenge.status != "pending") return res.json({info: "You can't accept this challenge as it is already accepted by someome!"})
+    if(foundChallenge.status != "pending") return res.json({error: "You can't accept this challenge as it is already accepted by someome!", success:false})
     foundChallenge.opponent = user._id;
     foundChallenge.status = "accepted";
     await foundChallenge.save()
+    return res.json({message: "Bet accepted successfully!", success: true})
 }
 
 // Claim Challenge features
@@ -74,12 +75,13 @@ const claimChallenge = async(req, res)=>{
     const user = req.user._id;
     const {id} = req.params;
     const availChallenge = await ChallengeModel.findById({_id:id});
-    if(availChallenge.opponent != user || availChallenge.challenger != user) return res.json({info: "You are not allowed to accept a challenge you're not a participants!"});
+    if(availChallenge.opponent != user || availChallenge.challenger != user) return res.json({info: "You are not allowed to accept a challenge you're not a participants!", success:false});
     const {proof} = req.body;
     availChallenge.proof = proof
     availChallenge.status = "Completed";
     availChallenge.winner = user
     await availChallenge.save()
+    return res.json({message:"Bet claim has been submitted, you will get the total bet amount soon", success:true})
 };
 
 const adminApproval = async(req, res)=>{

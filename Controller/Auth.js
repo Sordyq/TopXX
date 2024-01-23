@@ -35,20 +35,16 @@ const signUp = async (req,res)=>{
       username,
       password:hashedPassword
     })
-    User.register(newUser, password, function(err){
+    User.register(newUser, password, async function(err){
       if(err){
         console.log(err);
       }
+
+      const userWallet = new Wallet({
+        user: newUser._id,
+      });
+      await userWallet.save()
       passport.authenticate("local")(req,res, function(err){
-        const userWallet = new Wallet({
-          user: newUser._id,
-        });
-        userWallet
-        .save()
-        .then()
-        .catch((error)=>{
-          next(error);
-        });
         res.json({msg:"Sign Up Successfully"})
       })
   
