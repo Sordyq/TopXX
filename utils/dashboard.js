@@ -20,10 +20,10 @@ const userDashboard = async(req,res)=>{
 
     const formatUser = (person)=>{
         return{
-        username: person.username,
-        email: person.email,
-        isAdmin: person.isAdmin,
-        isBlocked: person.isBlocked
+        username: person?.username,
+        email: person?.email,
+        isAdmin: person?.isAdmin,
+        isBlocked: person?.isBlocked
         }
     }
 
