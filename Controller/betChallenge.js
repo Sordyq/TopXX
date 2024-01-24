@@ -113,7 +113,7 @@ const claimChallenge = async(req, res)=>{
     return res.json({message:"Bet claim has been submitted, you will get the total bet amount soon", success:true})
 };
 
-const oppoentClaimChallenge = async(req, res)=>{
+const opponentClaimChallenge = async(req, res)=>{
 
     const user = req.user.username;
     const {proof} = req.body;
@@ -197,5 +197,5 @@ module.exports = {
     claimChallenge,
     adminApproval,
     acceptChange,
-    oppoentClaimChallenge,
+    opponentClaimChallenge,
 }
